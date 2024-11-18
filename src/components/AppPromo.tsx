@@ -16,7 +16,7 @@ const AppPromo: React.FC = () => {
         <div className="mt-6 flex justify-center md:justify-start space-x-4">
           <Link href="/playstore">
             <Image 
-              src="/download.png" 
+              src="/home/download.png" 
               alt="Google Play Store" 
               width={250} 
               height={125} 
