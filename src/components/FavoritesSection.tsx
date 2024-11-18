@@ -9,8 +9,8 @@ type Favorite = {
 };
 
 const favorites: Favorite[] = [
-  { title: 'Trending on Instagram', img: '/young2.png', href: '/' },
-  { title: 'All Under $40', img: '/young1.png', href: '/' },
+  { title: 'Trending on Instagram', img: '/home/young2.png', href: '/' },
+  { title: 'All Under $40', img: '/home/young1.png', href: '/' },
 ];
 
 const FavoritesSection: React.FC = () => {

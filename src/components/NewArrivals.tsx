@@ -3,9 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const products = [
-  { name: 'Hoodies & Sweatshirt   →', image: '/Arrival1.png', link: '/' },
-  { name: 'Coats & Parkas   →', image: '/Arrival2.png', link: '/' },
-  { name: 'Tees & T-Shirt   →', image: '/Arrival3.png', link: '/' },
+  { name: 'Hoodies & Sweatshirt   →', image: '/home/Arrival1.png', link: '/' },
+  { name: 'Coats & Parkas   →', image: '/home/Arrival2.png', link: '/' },
+  { name: 'Tees & T-Shirt   →', image: '/home/Arrival3.png', link: '/' },
 ];
 
 const NewArrivals = () => {

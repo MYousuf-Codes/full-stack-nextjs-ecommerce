@@ -6,7 +6,7 @@ const SaleBanner = () => {
   return (
     <section className="flex flex-col lg:flex-row justify-center items-center bg-gradient-to-br from-yellow-200 to-yellow-400 p-6 sm:p-8 lg:p-10">
       <Image 
-        src="/PayDay.png" 
+        src="/home/PayDay.png" 
         alt="Sale Banner" 
         width={400} 
         height={350} 

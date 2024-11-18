@@ -15,18 +15,10 @@ const Header: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Reset the red dot when cart page is viewed
-  useEffect(() => {
-    if (isCartUpdated) {
-      const timer = setTimeout(() => setIsCartUpdated(false), 2000); // Hide red dot after 2 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [isCartUpdated]);
-
   return (
     <header className="flex items-center justify-between p-5 bg-background/50 backdrop-blur-lg bg-white">
       <Link href="/">
-        <Image src="/Logo.png" alt="Logo" width={140} height={70} className="ml-4 lg:ml-16" />
+        <Image src="/home/Logo.png" alt="Logo" width={140} height={70} className="ml-4 lg:ml-16" />
       </Link>
 
       {/* Navigation for large devices */}

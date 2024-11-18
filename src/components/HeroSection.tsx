@@ -21,7 +21,7 @@ const HeroSection = () => {
         </Link>
       </div>
       <Image 
-        src="/hero.png" 
+        src="/home/hero.png" 
         width={400} 
         height={300} 
         alt="Hero Image" 

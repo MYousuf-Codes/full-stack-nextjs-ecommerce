@@ -8,10 +8,10 @@ type SocialIconProps = {
 };
 
 const socialIcons: SocialIconProps[] = [
-  { src: '/facebook.png', alt: 'Facebook', href: '#' },
-  { src: '/insta.png', alt: 'Instagram', href: '#' },
-  { src: '/x.png', alt: 'Twitter', href: '#' },
-  { src: '/linkedin.png', alt: 'LinkedIn', href: '#' },
+  { src: '/home/facebook.png', alt: 'Facebook', href: '#' },
+  { src: '/home/insta.png', alt: 'Instagram', href: '#' },
+  { src: '/home/x.png', alt: 'Twitter', href: '#' },
+  { src: '/home/linkedin.png', alt: 'LinkedIn', href: '#' },
 ];
 
 const SocialIcon: React.FC<SocialIconProps> = ({ src, alt, href }) => (

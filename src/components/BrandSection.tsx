@@ -3,12 +3,12 @@ import Image from 'next/image';
 
 const BrandSection = () => {
   const brands = [
-    { name: 'H&M', src: '/H&M.png' },
-    { name: 'Obey', src: '/obey.png' },
-    { name: 'Shopify', src: '/shopify.png' },
-    { name: 'Lacoste', src: '/lacoste.png' },
-    { name: 'Levis', src: '/levis.png' },
-    { name: 'Amazon', src: '/amazon.png' },
+    { name: 'H&M', src: '/home/H&M.png' },
+    { name: 'Obey', src: '/home/obey.png' },
+    { name: 'Shopify', src: '/home/shopify.png' },
+    { name: 'Lacoste', src: '/home/lacoste.png' },
+    { name: 'Levis', src: '/home/levis.png' },
+    { name: 'Amazon', src: '/home/amazon.png' },
   ];
 
   return (
