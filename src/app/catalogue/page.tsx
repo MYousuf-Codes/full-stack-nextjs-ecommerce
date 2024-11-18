@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FiFilter, FiX } from "react-icons/fi"; // Icons for filter toggle
 import { products } from "../../Data/catalogueProducts"; // Import the product data
 
-const categories = ["Womens", "Mens", "Kids", "Indoor", "Outdoor", "Sports"];
+const categories = ["Headphones", "Watches", "Televisions", "Speakers", "Outdoor", "Sports"];
 const priceRanges = [
     { label: "$10 - $100", min: 10, max: 100 },
     { label: "$100 - $1k", min: 100, max: 1000 },
