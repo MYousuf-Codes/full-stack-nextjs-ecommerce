@@ -27,7 +27,7 @@ const AppPromo: React.FC = () => {
       </div>
       <div className="flex justify-center sm:ml-5 sm:mr-10 sm:m-  items-center mt-6 md:mt-0 md:w-full">
         <Image 
-          src="/App.png" 
+          src="/home/App.png" 
           alt="App Promotion" 
           width={700} 
           height={1200} 
