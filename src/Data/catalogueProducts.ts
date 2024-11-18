@@ -22,7 +22,7 @@ export const products: Product[] = [
     price: 329.0,
     discountPrice: 279.0, // Discounted price
     availability: true,
-    images: ["/catalogue/1.png", "/catalogue/2.png", "/catalogue/3.jpg"],
+    images: ["/catalogue/1.png", "/catalogue/2.png", "/catalogue/3.png"],
     category: "Headphones",
     rating: 4.5,
     reviewsCount: 1470,
@@ -34,7 +34,7 @@ export const products: Product[] = [
       "A sleek and stylish smartwatch with a variety of fitness tracking features and a high-definition touchscreen display.",
     price: 199.0,
     discountPrice: 169.0, // Discounted price
-    availability: true,
+    availability: false,
     images: ["/catalogue/4.png", "/catalogue/5.png", "/catalogue/6.png"],
     category: "Watches",
     rating: 4.0,
@@ -47,7 +47,7 @@ export const products: Product[] = [
       "Enjoy cinematic viewing in your living room with this stunning 4K Ultra HD television with vibrant colors and crystal-clear resolution.",
     price: 799.0,
     discountPrice: 649.0, // Discounted price
-    availability: true,
+    availability: false,
     images: ["/catalogue/10.png", "/catalogue/11.png", "/catalogue/12.png"],
     category: "Television",
     rating: 4.7,

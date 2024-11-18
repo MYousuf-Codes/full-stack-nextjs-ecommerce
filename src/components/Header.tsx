@@ -1,14 +1,25 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { HiMenu, HiX, HiSearch, HiShoppingCart } from 'react-icons/hi';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle search logic here (e.g., redirect to a search results page)
+    alert(`Search for: ${searchQuery}`);
   };
 
   return (
@@ -26,8 +37,22 @@ const Header: React.FC = () => {
         {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
       </button>
 
+      {/* Search Bar */}
+      <form onSubmit={handleSearchSubmit} className="relative hidden lg:block">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+          className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <HiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+      </form>
+
+      
+
       {/* Navigation for large devices */}
-      <nav className={`hidden lg:flex items-center space-x-6`}>
+      <nav className="hidden lg:flex items-center space-x-6">
         <ul className="flex items-center space-x-6">
           <li>
             <Link href="/catalogue" className="font-semibold">
@@ -49,13 +74,13 @@ const Header: React.FC = () => {
               LIFESTYLE
             </Link>
           </li>
-          <li>
-            <Link href="/signup" className="px-4 py-3 text-white font-semibold rounded-lg hover:bg-gray-700 bg-black">
-              SIGN UP
-            </Link>
-          </li>
         </ul>
       </nav>
+
+      {/* Cart Icon */}
+      <Link href="/cart" className="lg:block ml-6">
+        <HiShoppingCart size={30} />
+      </Link>
 
       {/* Dropdown Menu for small devices */}
       {isMenuOpen && (
@@ -72,18 +97,13 @@ const Header: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="/favourite" className="font-semibold" onClick={toggleMenu}>
+              <Link href="/favourites" className="font-semibold" onClick={toggleMenu}>
                 FAVORITES
               </Link>
             </li>
             <li>
               <Link href="/lifestyle" className="font-semibold" onClick={toggleMenu}>
                 LIFESTYLE
-              </Link>
-            </li>
-            <li>
-              <Link href="/signup" className="px-4 py-3 text-white font-semibold rounded-lg hover:bg-gray-700 bg-black" onClick={toggleMenu}>
-                SIGN UP
               </Link>
             </li>
           </ul>
