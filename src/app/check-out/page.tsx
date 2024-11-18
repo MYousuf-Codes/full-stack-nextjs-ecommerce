@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 
 const CheckOut: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -188,7 +187,7 @@ const CheckOut: React.FC = () => {
       {/* Disclaimer */}
       <div className="mt-10 text-center text-sm text-gray-600">
         <p>
-          Disclaimer: This is a project for educational purposes only. No actual product will be delivered, as this is not a real e-commerce website.
+          {`Disclaimer: This is a project for educational purposes only. No actual product will be delivered, as this is not a real e-commerce website.`}
         </p>
       </div>
     </main>

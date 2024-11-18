@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { products } from "@/Data/catalogueProducts";
 import { notFound } from "next/navigation";
 import { useCartContext } from "@/CartContext";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
@@ -42,7 +43,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         {/* Left: Image Carousel */}
         <div className="flex justify-center items-center">
           <div className="relative w-full max-w-md">
-            <img
+            <Image
               src={product.images[currentImageIndex]}
               alt={`${product.name} Image ${currentImageIndex + 1}`}
               className="w-full h-[400px] object-cover rounded-lg shadow-md"
