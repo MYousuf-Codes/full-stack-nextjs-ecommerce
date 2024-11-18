@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { HiMenu, HiX, HiShoppingCart } from 'react-icons/hi';
@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartUpdated, setIsCartUpdated] = useState(false); // Red dot indicator for the cart
   const pathname = usePathname(); // Get the current path
 
   const toggleMenu = () => {
@@ -75,9 +74,6 @@ const Header: React.FC = () => {
       {/* Cart Icon with Red Dot */}
       <Link href="/cart" className="relative lg:block ml-4">
         <HiShoppingCart size={30} />
-        {isCartUpdated && (
-          <div className="absolute top-0 right-0 h-2.5 w-2.5 bg-red-500 rounded-full"></div>
-        )}
       </Link>
 
       {/* Dropdown Menu for small devices */}
