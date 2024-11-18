@@ -8,10 +8,10 @@ type SocialIconProps = {
 };
 
 const socialIcons: SocialIconProps[] = [
-  { src: '/home/facebook.png', alt: 'Facebook', href: '#' },
-  { src: '/home/insta.png', alt: 'Instagram', href: '#' },
-  { src: '/home/x.png', alt: 'Twitter', href: '#' },
-  { src: '/home/linkedin.png', alt: 'LinkedIn', href: '#' },
+  { src: '/home/facebook.png', alt: 'Facebook', href: 'https://www.facebook.com/MuhammadYousafMarfaniMYM' },
+  { src: '/home/insta.png', alt: 'Instagram', href: 'https://instagram.com/myousuf_575' },
+  { src: '/home/x.png', alt: 'Twitter', href: 'https://www.instagram.com/m_yousuf575/' },
+  { src: '/home/linkedin.png', alt: 'LinkedIn', href: 'https://www.linkedin.com/in/MYousuf-Codes' },
 ];
 
 const SocialIcon: React.FC<SocialIconProps> = ({ src, alt, href }) => (
@@ -46,6 +46,12 @@ const Footer: React.FC = () => {
             </ul>
           </div>
         ))}
+      </div>
+
+      {/* Copyright and Developer Credit */}
+      <div className="text-center mt-6 text-sm md:text-base text-gray-400">
+        <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
+        <p>Developed with 🖤 by <a href="https://www.linkedin.com/in/MYousuf-Codes" className="text-yellow-500 hover:underline">Muhammad Yousuf</a></p>
       </div>
     </footer>
   );
