@@ -30,8 +30,8 @@ const SaleBanner = () => {
         <p className="text-black font-semibold">
           *Terms & Conditions apply
         </p>
-        <Link href="/sale">
-          <button className="mt-6 px-5 py-3 bg-black text-white rounded font-semibold hover:bg-gray-900 transition duration-300">
+        <Link href="/catalogue">
+          <button className="mt-6 px-5 py-3 bg-black text-white rounded font-semibold hover:bg-gray-800 transition duration-300">
             SHOP NOW
           </button>
         </Link>

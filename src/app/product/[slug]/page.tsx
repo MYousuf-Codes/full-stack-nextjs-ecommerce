@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { products } from "@/Data/catalogueProducts";
 import { notFound } from "next/navigation";
 import { useCartContext } from "@/CartContext";
+import Link from "next/link";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const product = products.find((p) => p.slug === params.slug);
@@ -27,6 +28,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
   };
 
+  
   const handleAddToCart = () => {
     addToCart({ ...product, quantity, slug: product.slug, image: product.images[0] });
     setAlertMessage(`${product.name} has been added to your cart!`); // Set the alert message
@@ -127,21 +129,23 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               Add to Cart
             </button>
           </div>
-
+              <Link href={"/check-out"} >
           <button className="mt-6 px-24 py-2 bg-blue-600 text-white hover:bg-blue-800 font-medium rounded-lg">
             Buy Now
           </button>
+          </Link>
         </div>
       </div>
 
       {/* Custom Alert */}
-      {showAlert && (
+     {showAlert && (
         <div className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center p-4">
           <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg">
             {alertMessage}
           </div>
         </div>
       )}
+
     </div>
   );
 }

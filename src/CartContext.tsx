@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 type CartItem = {
   slug: string;
@@ -13,7 +13,7 @@ type CartItem = {
 type CartContextType = {
   cart: CartItem[];
   addToCart: (product: CartItem) => void;
-  removeFromCart: (slug: string) => void; // Add removeFromCart here
+  removeFromCart: (slug: string) => void;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -21,12 +21,27 @@ const CartContext = createContext<CartContextType | null>(null);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
+  // Load cart data from localStorage when the component mounts
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart)); // Parse the stored cart and set it to state
+    }
+  }, []);
+
+  // Save cart data to localStorage whenever it changes
+  useEffect(() => {
+    if (cart.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cart)); // Save cart to localStorage
+    }
+  }, [cart]);
+
   const addToCart = (product: CartItem) => {
-    setCart((prev) => [...prev, product]);
+    setCart((prev) => [...prev, product]); // Add the new product to the cart
   };
 
   const removeFromCart = (slug: string) => {
-    setCart((prev) => prev.filter(item => item.slug !== slug)); // Remove item based on slug
+    setCart((prev) => prev.filter(item => item.slug !== slug)); // Remove item by slug
   };
 
   return (
