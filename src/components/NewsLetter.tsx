@@ -19,13 +19,13 @@ const Newsletter: React.FC = () => {
         <p className="text-white text-sm md:text-base mb-5">
           Type your email down below and be part of the young wild generation
         </p>
-        <form className="flex flex-col md:flex-row justify-center items-center" onSubmit={handleSubmit}>
+        <form className="flex flex-col md:flex-row justify-center items-center max-w-full lg:max-w-4xl mx-auto" onSubmit={handleSubmit}>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Add your email here"
-            className="px-4 py-3 text-gray-700 rounded-md border-none focus:ring-2 focus:ring-yellow-700 w-full md:w-1/2 lg:w-1/3"
+            className="px-4 py-3 text-gray-700 rounded-md border-none focus:ring-2 focus:ring-yellow-700 w-full md:w-3/5 lg:w-1/2 xl:w-2/5 max-w-lg"
             required
           />
           <button
@@ -35,6 +35,7 @@ const Newsletter: React.FC = () => {
             SEND
           </button>
         </form>
+
       </div>
     </main>
   );

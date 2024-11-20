@@ -16,27 +16,25 @@ const favorites: Favorite[] = [
 const FavoritesSection: React.FC = () => {
   return (
     <section className="p-6 md:p-8 lg:p-10">
-      <h2 className="text-3xl sm:text-4xl font-extrabold mb-6 text-center sm:text-left">{`Young’s Favourite`}</h2>
-      
-      {/* Use CSS grid to control the layout more precisely */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-2">
-        {favorites.map(({ title, img, href }, index) => (
-          <Link
-            key={index}
-            href={href}
-            className="text-left transition transform hover:scale-105 flex flex-col items-center"
-          >
-            <Image
-              src={img}
-              alt={title}
-              width={600}
-              height={700}
-              className="mx-auto w-full object-cover rounded-lg"
-            />
-            <h3 className="mt-4 text-xl font-semibold">{title}</h3>
-            <p className="text-gray-500">Explore Now</p>
-          </Link>
-        ))}
+      <div className="w-full max-w-screen-lg mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-extrabold mb-6 text-center sm:text-left">{`Young’s Favourite`}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {favorites.map(({ title, img, href }, index) => (
+            <Link key={index} href={href}>
+              <div className="transition transform hover:scale-105 text-center">
+                <Image
+                  src={img}
+                  alt={title}
+                  width={400}
+                  height={480}
+                  className="rounded-lg w-full object-cover"
+                />
+                <h3 className="mt-4 text-lg font-semibold">{title}</h3>
+                <p className="text-gray-500 text-sm">Explore Now</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FiFilter, FiX } from "react-icons/fi"; // Icons for filter toggle
+import { FiFilter, FiX, FiShoppingCart } from "react-icons/fi"; // Cart Icon
 import { products } from "../../Data/catalogueProducts"; // Import the product data
 
 const categories = ["Headphones", "Watches", "Televisions", "Speakers", "Outdoor", "Sports"];
@@ -34,6 +34,7 @@ const Catalogue: React.FC = () => {
                 : [...prev, range]
         );
     };
+    
 
     const filteredProducts = products.filter((product) => {
         const categoryMatch = selectedCategories.length ? selectedCategories.includes(product.category) : true;
@@ -44,6 +45,7 @@ const Catalogue: React.FC = () => {
     });
 
     return (
+        
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4 text-center">Catalogue</h1>
 
@@ -103,18 +105,19 @@ const Catalogue: React.FC = () => {
                     </div>
                 </aside>
 
-                <div className="w-full lg:w-5/6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="w-full lg:w-5/6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     {filteredProducts.map((product) => (
                         <Link key={product.slug} href={`/product/${product.slug}`}>
-                            <div className="border rounded-lg p-4 cursor-pointer hover:shadow-lg transition-shadow">
-                                {/* Use the Image component with object-fit */}
-                                <div className="relative w-full h-64 overflow-hidden mb-4">
+                            <div className="border hover:border-black rounded-lg p-4 cursor-pointer shadow-md hover:shadow-xl transition-shadow h-full">
+                                {/* Square Container with Aspect Ratio */}
+                                <div className="relative w-full h-0 pb-[100%] overflow-hidden mb-4">
                                     <Image
-                                        src={product.images[0]} // Assuming product.images is an array and we're using the first image
-                                        width={500}
-                                        height={400}
+                                        src={product.images[0]} // product.images is an array and we're using the first image
+                                        width={550}
+                                        height={450}
                                         alt={product.name}
-                                        className="object-cover w-full h-full"
+                                        objectFit="cover"
+                                        className="object-cover absolute inset-0 w-full h-full"
                                     />
                                 </div>
                                 <h2 className="text-lg font-semibold">{product.name}</h2>
@@ -125,7 +128,10 @@ const Catalogue: React.FC = () => {
                                     </span>
                                     <span className="ml-2 text-sm text-gray-600">({product.rating})</span>
                                 </div>
-                                <p className="text-xl font-bold mt-2">${product.price.toFixed(2)}</p>
+                                <div className="flex justify-between items-center mt-2">
+                                    <p className="text-xl font-bold">${product.price.toFixed(2)}</p>
+                                    <FiShoppingCart className="text-xl text-gray-700 hover:text-yellow-400 hover:font-bold cursor-pointer" />
+                                </div>
                             </div>
                         </Link>
                     ))}

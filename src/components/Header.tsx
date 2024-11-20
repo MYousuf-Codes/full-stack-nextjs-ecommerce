@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="flex items-center justify-between p-5 bg-background/50 backdrop-blur-lg bg-white">
+    <header className="static flex items-center justify-between pt-4 bg-background/50 backdrop-blur-lg bg-white mx-auto max-w-screen-xl w-full">
       <Link href="/">
         <Image src="/home/Logo.png" alt="Logo" width={140} height={70} className="ml-4 lg:ml-16" />
       </Link>
@@ -78,7 +78,7 @@ const Header: React.FC = () => {
 
       {/* Dropdown Menu for small devices */}
       {isMenuOpen && (
-        <nav className="lg:hidden absolute top-20 right-0 left-0 bg-white p-6 shadow-lg">
+        <nav className="lg:hidden z-10 absolute top-20 right-0 left-0 bg-white p-6 shadow-lg">
           <ul className="flex flex-col space-y-4 items-center">
             <li>
               <Link

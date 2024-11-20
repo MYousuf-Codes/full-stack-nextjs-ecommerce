@@ -130,7 +130,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               Add to Cart
             </button>
           </div>
-              <Link href={"/check-out"} >
+              <Link href={"/checkout"} >
           <button className="mt-6 px-24 py-2 bg-blue-600 text-white hover:bg-blue-800 font-medium rounded-lg">
             Buy Now
           </button>
