@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="static flex items-center justify-between pt-4 bg-background/50 backdrop-blur-lg bg-white mx-auto max-w-screen-xl w-full">
+    <header className="flex items-center justify-between pt-4 pb-0 bg-background/50 backdrop-blur-lg bg-white mx-auto max-w-screen-xl w-full">
       <Link href="/">
         <Image src="/home/Logo.png" alt="Logo" width={140} height={70} className="ml-4 lg:ml-16" />
       </Link>

@@ -33,7 +33,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({ imageSrc }) => {
   }, []);
 
   return (
-    <div className="relative flex items-center justify-center h-screen bg-gray-900 text-white">
+    <div className="relative flex items-center mt-5 justify-center h-screen bg-gray-900 text-white">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-md opacity-70"
