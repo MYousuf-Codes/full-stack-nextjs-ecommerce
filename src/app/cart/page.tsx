@@ -87,7 +87,7 @@ export default function CartPage() {
                     Sub Total: ${totalSubtotal.toFixed(2)}
                 </button>
 
-                <Link href="/check-out">
+                <Link href="/checkout">
                     <button
                         className="px-6 py-3 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-800"
                     >
