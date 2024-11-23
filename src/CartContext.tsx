@@ -1,10 +1,11 @@
 "use client"
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { ProductImage } from "./Data/catalogueProducts";
 
 type CartItem = {
   slug: string;
   name: string;
-  image: string; // Include ProductImage if it's relevant
+  image: ProductImage; // Include ProductImage if it's relevant
   price: number;
   discountPrice: number;
   quantity: number;
