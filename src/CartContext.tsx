@@ -5,7 +5,7 @@ import { ProductImage } from "./Data/catalogueProducts";
 type CartItem = {
   slug: string;
   name: string;
-  image: string | symbol | ProductImage; // Include ProductImage if it's relevant
+  image: string; // Include ProductImage if it's relevant
   price: number;
   discountPrice: number;
   quantity: number;
