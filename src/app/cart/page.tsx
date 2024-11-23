@@ -57,7 +57,7 @@ export default function CartPage() {
                                     src={item.image}
                                     alt={item.name}
                                     width={200}
-                                    height={300}
+                                    height={400}
                                     objectFit="cover"
                                     className="overflow-hidden object-cover"
                                 />

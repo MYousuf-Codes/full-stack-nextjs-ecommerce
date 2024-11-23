@@ -15,8 +15,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [showAlert, setShowAlert] = useState(false); // State for the alert
-  const [alertMessage, setAlertMessage] = useState(""); // State for the alert message
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const { addToCart } = useCartContext();
 
   const handlePrevImage = () => {
@@ -29,24 +29,30 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
   };
 
-  
   const handleAddToCart = () => {
-    addToCart({ ...product, quantity, slug: product.slug, image: product.images[0] });
-    setAlertMessage(`${product.name} has been added to your cart!`); // Set the alert message
-    setShowAlert(true); // Show the alert
-    setTimeout(() => setShowAlert(false), 3000); // Hide the alert after 3 seconds
+    addToCart({
+      ...product,
+      quantity,
+      slug: product.slug,
+      image: product.images[0],
+    });
+    setAlertMessage(`${product.name} has been added to your cart!`);
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3000);
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="container h-screen mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left: Image Carousel */}
         <div className="flex justify-center items-center">
           <div className="relative w-full max-w-md">
             <Image
               src={product.images[currentImageIndex]}
               alt={`${product.name} Image ${currentImageIndex + 1}`}
-              className="w-full h-[400px] object-cover rounded-lg shadow-md"
+              width={400}
+              height={400}
+              className="w-full h-auto object-cover rounded-lg shadow-md"
             />
             <button
               onClick={handlePrevImage}
@@ -65,7 +71,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`w-3 h-3 rounded-full ${currentImageIndex === index ? "bg-gray-800" : "bg-gray-400"}`}
+                  className={`w-3 h-3 rounded-full ${
+                    currentImageIndex === index ? "bg-gray-800" : "bg-gray-400"
+                  }`}
                 ></button>
               ))}
             </div>
@@ -74,9 +82,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
         {/* Right: Product Details */}
         <div>
-          <h1 className="text-3xl font-bold">{product.name}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">{product.name}</h1>
           <p className="mt-4 text-gray-600">{product.description}</p>
-          <p className="mt-6 text-2xl font-bold text-gray-900">
+          <p className="mt-6 text-xl md:text-2xl font-bold text-gray-900">
             ${product.discountPrice || product.price.toFixed(2)}{" "}
             {product.discountPrice && (
               <span className="line-through text-gray-500">
@@ -85,8 +93,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             )}
           </p>
           <p
-            className={`mt-4 ${product.availability ? "text-green-500" : "text-red-500"
-              } font-medium`}
+            className={`mt-4 ${
+              product.availability ? "text-green-500" : "text-red-500"
+            } font-medium`}
           >
             {product.availability ? "In Stock" : "Out of Stock"}
           </p>
@@ -95,10 +104,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
-                  className={`${index < Math.round(product.rating)
+                  className={`${
+                    index < Math.round(product.rating)
                       ? "text-yellow-400"
                       : "text-gray-300"
-                    }`}
+                  }`}
                 >
                   ★
                 </span>
@@ -109,7 +119,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             </span>
           </div>
 
-          <div className="flex items-center mt-6 space-x-4">
+          <div className="flex flex-wrap items-center mt-6 space-x-4">
             <button
               onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
               className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-lg"
@@ -130,22 +140,24 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               Add to Cart
             </button>
           </div>
-              <Link href={"/checkout"} >
-          <button className="mt-6 px-24 py-2 bg-blue-600 text-white hover:bg-blue-800 font-medium rounded-lg">
-            Buy Now
-          </button>
+          <Link href={"/checkout"}>
+            <button className="mt-6 w-full md:w-auto px-24 py-2 bg-blue-600 hover:bg-blue-800 text-white font-medium rounded-lg">
+              Buy Now
+            </button>
           </Link>
         </div>
       </div>
 
       {/* Custom Alert */}
-     {showAlert && (
-        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center p-4">
-          <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg">
+      <Link href={"/cart"} className="hover:font-extrabold">
+      {showAlert && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+          <div className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg">
             {alertMessage}
           </div>
         </div>
       )}
+      </Link>
 
     </div>
   );
