@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FiFilter, FiX, FiShoppingCart } from "react-icons/fi"; // Cart Icon
-import { products } from "../../Data/catalogueProducts"; // Import the product data
+import { products } from "@/Data/catalogueProducts"; // Import the product data
 
 const categories = ["Mens", "Womens", "Kids", "Indoor", "Outdoor", "Sports"];
 const priceRanges = [
@@ -37,7 +37,8 @@ const Catalogue: React.FC = () => {
 
     const filteredProducts = products.filter((product) => {
         const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-        const priceMatch = selectedPriceRanges.length === 0 ||
+        const priceMatch =
+            selectedPriceRanges.length === 0 ||
             selectedPriceRanges.some((range) => product.price >= range.min && product.price <= range.max);
         return categoryMatch && priceMatch;
     });
@@ -115,34 +116,40 @@ const Catalogue: React.FC = () => {
                 </aside>
 
                 <div className="w-full lg:w-5/6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {filteredProducts.map((product) => (
-                        <Link key={product.slug} href={`/product/${product.slug}`}>
-                            <div className="border hover:border-black rounded-lg p-3 cursor-pointer shadow-md hover:shadow-xl transition-shadow h-full">
-                                <div className="relative w-full h-0 pb-[100%] overflow-hidden mb-3">
-                                    <Image
-                                        src={product.images[0]}
-                                        width={550}
-                                        height={450}
-                                        alt={product.name}
-                                        objectFit="cover"
-                                        className="object-cover absolute inset-0 w-full h-full"
-                                    />
+                    {filteredProducts.length > 0 ? (
+                        filteredProducts.map((product) => (
+                            <Link key={product.slug} href={`/product/${product.slug}`}>
+                                <div className="border hover:border-black rounded-lg p-3 cursor-pointer shadow-md hover:shadow-xl transition-shadow h-full">
+                                    <div className="relative w-full h-0 pb-[100%] overflow-hidden mb-3">
+                                        <Image
+                                            src={product.images[0]}
+                                            width={550}
+                                            height={450}
+                                            alt={product.name}
+                                            objectFit="cover"
+                                            className="object-cover absolute inset-0 w-full h-full"
+                                        />
+                                    </div>
+                                    <h2 className="text-md font-semibold">{product.name}</h2>
+                                    <div className="flex items-center">
+                                        <span className="text-yellow-500">
+                                            {"★".repeat(Math.floor(product.rating))}
+                                            {"☆".repeat(5 - Math.floor(product.rating))}
+                                        </span>
+                                        <span className="ml-1 text-sm text-gray-600">({product.rating})</span>
+                                    </div>
+                                    <div className="flex justify-between items-center mt-1">
+                                        <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
+                                        <FiShoppingCart className="text-lg text-gray-700 hover:text-yellow-400 hover:font-bold cursor-pointer" />
+                                    </div>
                                 </div>
-                                <h2 className="text-md font-semibold">{product.name}</h2>
-                                <div className="flex items-center">
-                                    <span className="text-yellow-500">
-                                        {"★".repeat(Math.floor(product.rating))}
-                                        {"☆".repeat(5 - Math.floor(product.rating))}
-                                    </span>
-                                    <span className="ml-1 text-sm text-gray-600">({product.rating})</span>
-                                </div>
-                                <div className="flex justify-between items-center mt-1">
-                                    <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
-                                    <FiShoppingCart className="text-lg text-gray-700 hover:text-yellow-400 hover:font-bold cursor-pointer" />
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        ))
+                    ) : (
+                        <p className="text-center col-span-full text-xl font-semibold text-gray-500">
+                            No products match the selected filters.
+                        </p>
+                    )}
                 </div>
             </div>
         </div>

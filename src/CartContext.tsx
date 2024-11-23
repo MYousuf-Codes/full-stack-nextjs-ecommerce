@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { ProductImage } from "./Data/catalogueProducts";
+import { ProductImage } from "@/Data/catalogueProducts";
 
 type CartItem = {
   slug: string;

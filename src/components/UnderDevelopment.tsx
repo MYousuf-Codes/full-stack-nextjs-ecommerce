@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 interface ComingSoonProps {
-  imageSrc: string; // Add image source as a prop
+  imageSrc: string; // Add image source as prop
 }
 
 const ComingSoon: React.FC<ComingSoonProps> = ({ imageSrc }) => {
@@ -33,7 +33,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({ imageSrc }) => {
   }, []);
 
   return (
-    <div className="relative flex items-center mt-5 justify-center h-screen bg-gray-900 text-white">
+    <div className="relative flex items-center mt-5 justify-center h-screen bg-white text-black">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-md opacity-70"
@@ -41,7 +41,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({ imageSrc }) => {
       ></div>
 
       {/* Overlay with blur effect */}
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="absolute inset-0 bg-slate-200 bg-opacity-60"></div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 md:px-8">

@@ -4,7 +4,7 @@ import UnderDevelopment from "@/components/UnderDevelopment";
 
 function fashion () {
     return (
-        <UnderDevelopment imageSrc="/coming-soon.webp"/>
+        <UnderDevelopment imageSrc="/pr-1.jpg" />
     )
 }
 
