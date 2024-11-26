@@ -16,8 +16,9 @@ const CheckOut: React.FC = () => {
     country: "",
     paymentMethod: "creditCard",
   });
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [error, setError] = useState(""); // Error message
 
-  // Update checkout items based on query parameters or cart
   useEffect(() => {
     const productId = searchParams.get("slug");
     if (productId) {
@@ -25,20 +26,18 @@ const CheckOut: React.FC = () => {
       if (product) {
         setCheckoutItems([product]);
       } else {
-        console.warn("Product not found in the cart.");
+        setError("The selected product is not in your cart.");
       }
     } else {
       setCheckoutItems(cart);
     }
   }, [searchParams, cart]);
 
-  // Calculate total order amount
   const totalAmount = checkoutItems.reduce(
     (total, item) => total + (item.discountPrice || item.price) * item.quantity,
     0
   );
 
-  // Handle input changes for form fields
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -49,18 +48,31 @@ const CheckOut: React.FC = () => {
     }));
   };
 
-  // Handle order submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Submit order logic here
-    alert("Order placed successfully!");
+    setIsLoading(true);
+
+    // Mock order submission
+    setTimeout(() => {
+      setIsLoading(false);
+      alert("Order placed successfully!");
+    }, 1500);
   };
+
+  const countryOptions = [
+    { code: "USA", name: "United States" },
+    { code: "CA", name: "Canada" },
+    { code: "UK", name: "United Kingdom" },
+    { code: "AU", name: "Australia" },
+    { code: "DE", name: "Germany" },
+  ];
 
   return (
     <main className="min-h-screen mt-6 bg-gray-100 py-10 px-5 sm:px-20">
       <h1 className="text-3xl font-semibold mb-6 text-center">Checkout</h1>
 
       <div className="bg-white shadow-lg rounded-lg p-8">
+        {error && <p className="text-red-600">{error}</p>}
         {checkoutItems.length > 0 ? (
           <form onSubmit={handleSubmit}>
             {/* Shipping Information */}
@@ -83,6 +95,7 @@ const CheckOut: React.FC = () => {
                   onChange={handleChange}
                   placeholder="Email Address"
                   required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                   className="w-full p-3 border rounded-lg"
                 />
               </div>
@@ -112,6 +125,7 @@ const CheckOut: React.FC = () => {
                   onChange={handleChange}
                   placeholder="Postal Code"
                   required
+                  pattern="\d{5}(-\d{4})?"
                   className="w-full p-3 border rounded-lg"
                 />
               </div>
@@ -123,10 +137,11 @@ const CheckOut: React.FC = () => {
                 className="w-full p-3 border rounded-lg"
               >
                 <option value="">Select Country</option>
-                <option value="USA">USA</option>
-                <option value="Canada">Canada</option>
-                <option value="UK">UK</option>
-                <option value="Australia">Australia</option>
+                {countryOptions.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -163,7 +178,9 @@ const CheckOut: React.FC = () => {
               <div className="space-y-4">
                 {checkoutItems.map((item) => (
                   <div key={item.slug} className="flex justify-between">
-                    <span>{item.name} x{item.quantity}</span>
+                    <span>
+                      {item.name} x{item.quantity}
+                    </span>
                     <span>
                       ${((item.discountPrice || item.price) * item.quantity).toFixed(2)}
                     </span>
@@ -178,9 +195,12 @@ const CheckOut: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3 bg-green-600 text-white text-lg rounded-lg mt-8"
+              disabled={isLoading}
+              className={`w-full py-3 text-white text-lg rounded-lg mt-8 ${
+                isLoading ? "bg-gray-500" : "bg-green-600"
+              }`}
             >
-              Place Order
+              {isLoading ? "Processing..." : "Place Order"}
             </button>
           </form>
         ) : (
