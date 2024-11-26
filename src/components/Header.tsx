@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { HiMenu, HiX, HiShoppingCart } from 'react-icons/hi';
-import { usePathname } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { HiMenu, HiX, HiShoppingCart } from "react-icons/hi";
+import { usePathname } from "next/navigation";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,108 +14,70 @@ const Header: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Close menu when the pathname changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <header className="flex items-center justify-between pt-4 pb-0 bg-background/50 backdrop-blur-lg bg-white mx-auto max-w-screen-xl w-full">
-      <Link href="/">
-        <Image src="/home/Logo.png" alt="Logo" width={140} height={70} className="ml-4 lg:ml-16" />
-      </Link>
+    <header className="fixed top-0 left-0 w-full z-30 bg-white/50 backdrop-blur-lg shadow-md">
+      <div className="flex items-center justify-between px-4 py-4 mx-auto max-w-screen-xl">
+        {/* Logo */}
+        <Link href="/">
+          <Image src="/home/Logo.png" alt="Logo" width={140} height={70} className="ml-4 lg:ml-16" />
+        </Link>
 
-      {/* Navigation for large devices */}
-      <nav className="hidden lg:flex items-center ml-auto space-x-4">
-        <ul className="flex items-center space-x-6">
-          <li>
-            <Link
-              href="/catalogue"
-              className={`font-semibold py-2 px-4 rounded-md transition duration-300 
-                ${pathname === '/catalogue' ? 'border-2 border-transparent bg-blue-500 text-white' : 'hover:border-2 hover:border-blue-500 hover:bg-blue-50'}`}
-            >
-              CATALOGUE
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/fashion"
-              className={`font-semibold py-2 px-4 rounded-md transition duration-300 
-                ${pathname === '/fashion' ? 'border-2 border-transparent bg-blue-500 text-white' : 'hover:border-2 hover:border-blue-500 hover:bg-blue-50'}`}
-            >
-              FASHION
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/favourites"
-              className={`font-semibold py-2 px-4 rounded-md transition duration-300 
-                ${pathname === '/favourites' ? 'border-2 border-transparent bg-blue-500 text-white' : 'hover:border-2 hover:border-blue-500 hover:bg-blue-50'}`}
-            >
-              FAVORITES
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/lifestyle"
-              className={`font-semibold py-2 px-4 rounded-md transition duration-300 
-                ${pathname === '/lifestyle' ? 'border-2 border-transparent bg-blue-500 text-white' : 'hover:border-2 hover:border-blue-500 hover:bg-blue-50'}`}
-            >
-              LIFESTYLE
-            </Link>
-          </li>
-        </ul>
-      </nav>
+        {/* Large Screen Navigation */}
+        <nav className="hidden lg:flex items-center ml-auto space-x-4">
+          <ul className="flex items-center space-x-6">
+            {["catalogue", "fashion", "favourites", "lifestyle"].map((menu) => (
+              <li key={menu}>
+                <Link
+                  href={`/${menu}`}
+                  className={`font-semibold py-2 px-4 rounded-md transition duration-300 
+                  ${
+                    pathname === `/${menu}`
+                      ? "border-2 border-transparent bg-blue-500 text-white"
+                      : "hover:border-2 hover:border-blue-500 hover:bg-blue-50"
+                  }`}
+                >
+                  {menu.toUpperCase()}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      {/* Hamburger for small devices */}
-      <button
-        className="lg:hidden block text-black focus:outline-none ml-auto"
-        onClick={toggleMenu}
-        aria-label="Toggle Menu"
-      >
-        {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
-      </button>
+        {/* Hamburger for Small Screens */}
+        <button
+          className="lg:hidden block text-black focus:outline-none ml-auto"
+          onClick={toggleMenu}
+          aria-label="Toggle Menu"
+        >
+          {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
+        </button>
 
-      {/* Cart Icon with Red Dot */}
-      <Link href="/cart" className="relative lg:block ml-4">
-        <HiShoppingCart size={30} />
-      </Link>
+        {/* Cart Icon */}
+        <Link href="/cart" className="relative lg:block ml-4">
+          <HiShoppingCart size={30} />
+        </Link>
+      </div>
 
-      {/* Dropdown Menu for small devices */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <nav className="lg:hidden z-10 absolute top-20 right-0 left-0 bg-white p-6 shadow-lg">
-          <ul className="flex flex-col space-y-4 items-center">
-            <li>
-              <Link
-                href="/catalogue"
-                className="font-semibold py-2 px-4 rounded-md transition duration-300 hover:border-2 hover:border-blue-500 hover:bg-blue-50"
-                onClick={toggleMenu}
-              >
-                CATALOGUE
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/fashion"
-                className="font-semibold py-2 px-4 rounded-md transition duration-300 hover:border-2 hover:border-blue-500 hover:bg-blue-50"
-                onClick={toggleMenu}
-              >
-                FASHION
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/favourites"
-                className="font-semibold py-2 px-4 rounded-md transition duration-300 hover:border-2 hover:border-blue-500 hover:bg-blue-50"
-                onClick={toggleMenu}
-              >
-                FAVORITES
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/lifestyle"
-                className="font-semibold py-2 px-4 rounded-md transition duration-300 hover:border-2 hover:border-blue-500 hover:bg-blue-50"
-                onClick={toggleMenu}
-              >
-                LIFESTYLE
-              </Link>
-            </li>
+        <nav className="lg:hidden absolute top-16 left-0 right-0 bg-white shadow-lg z-30">
+          <ul className="flex flex-col items-center space-y-4 p-6">
+            {["catalogue", "fashion", "favourites", "lifestyle"].map((menu) => (
+              <li key={menu}>
+                <Link
+                  href={`/${menu}`}
+                  className="font-semibold py-2 px-4 rounded-md transition duration-300 hover:border-2 hover:border-blue-500 hover:bg-blue-50"
+                  onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                >
+                  {menu.toUpperCase()}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       )}

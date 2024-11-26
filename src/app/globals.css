@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* Mobile and small screen behavior */
+@media (max-width: 1024px) {
+    .fixed-filters {
+        top: 0; /* Adjust top position on small screens */
+        left: 0;
+        width: 100%;
+    }
+
+    .fixed-filters.translate-x-0 {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .fixed-filters.-translate-x-full {
+        transform: translateX(-100%);
+    }
+}
+
+/* Adjust the filter section for bigger screens */
+@media (min-width: 1024px) {
+    .fixed-filters {
+        transform: translateX(0);
+    }
+}
+

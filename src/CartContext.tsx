@@ -1,11 +1,12 @@
-"use client"
+// CartContext.tsx
+"use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { ProductImage } from "@/Data/catalogueProducts";
 
 type CartItem = {
   slug: string;
   name: string;
-  image: ProductImage; // Include ProductImage if it's relevant
+  image: ProductImage;
   price: number;
   discountPrice: number;
   quantity: number;
@@ -26,23 +27,36 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
     if (storedCart) {
-      setCart(JSON.parse(storedCart)); // Parse the stored cart and set it to state
+      setCart(JSON.parse(storedCart));
     }
   }, []);
 
   // Save cart data to localStorage whenever it changes
   useEffect(() => {
     if (cart.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(cart)); // Save cart to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
   }, [cart]);
 
   const addToCart = (product: CartItem) => {
-    setCart((prev) => [...prev, product]); // Add the new product to the cart
+    setCart((prev) => {
+      const existingProductIndex = prev.findIndex(
+        (item) => item.slug === product.slug
+      );
+      if (existingProductIndex > -1) {
+        // Update quantity if product already exists in cart
+        const updatedCart = [...prev];
+        updatedCart[existingProductIndex].quantity += product.quantity;
+        return updatedCart;
+      } else {
+        // Add new product to the cart
+        return [...prev, product];
+      }
+    });
   };
 
   const removeFromCart = (slug: string) => {
-    setCart((prev) => prev.filter(item => item.slug !== slug)); // Remove item by slug
+    setCart((prev) => prev.filter((item) => item.slug !== slug));
   };
 
   return (

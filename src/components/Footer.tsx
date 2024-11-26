@@ -23,8 +23,8 @@ const SocialIcon: React.FC<SocialIconProps> = ({ src, alt, href }) => (
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white py-8 md:py-10 px-4 md:px-5">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 mt-10 md:mt-20 mb-10 md:mb-20 gap-6 md:gap-8 text-center md:text-left">
+    <footer className="bg-black text-white py-6 px-4">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div>
           <h3 className="font-bold text-lg md:text-xl mb-2"><Link href={"/"}>FASHION</Link></h3>
           <p className="text-gray-400 text-sm md:text-base">Complete your style with awesome clothes from us.</p>
@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
             <li><Link href="/privacy-policy" className='hover:text-yellow-500 cursor-pointer mb-1'>Privacy Policy</Link></li>
             <li><Link href="/refund-policy" className='hover:text-yellow-500 cursor-pointer mb-1'>Refund Policy</Link></li>
             <li><Link href="/shipping-policy" className='hover:text-yellow-500 cursor-pointer mb-1'>Shipping Policy</Link></li>
-        
+
           </ul>
         </div>
       </div>
@@ -76,6 +76,7 @@ const Footer: React.FC = () => {
         <p>Developed with ❤ by <Link href="https://www.linkedin.com/in/MYousuf-Codes" className="text-yellow-500 hover:underline">Muhammad Yousuf</Link></p>
       </div>
     </footer>
+
   );
 };
 
