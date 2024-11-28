@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useCartContext } from "@/CartContext"; // Ensure this context is implemented
+import { useCartContext } from "@/CartContext"; // Ensure this context is implemented and provides `cart`.
 import { useSearchParams } from "next/navigation";
 
 const CheckOut: React.FC = () => {
-  const { cart } = useCartContext();
+  const { cart = [] } = useCartContext() || {}; // Fallback to avoid crashes if the context isn't available.
   const searchParams = useSearchParams();
 
-  const [checkoutItems, setCheckoutItems] = useState(cart || []);
+  const [checkoutItems, setCheckoutItems] = useState(cart);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,15 +29,21 @@ const CheckOut: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Handle search params for direct product checkout
   useEffect(() => {
     const product = searchParams.get("product");
     if (product) {
-      setCheckoutItems([JSON.parse(product)]);
+      try {
+        setCheckoutItems([JSON.parse(product)]);
+      } catch {
+        setErrorMessage("Invalid product data in the URL.");
+      }
     } else {
       setCheckoutItems(cart);
     }
   }, [searchParams, cart]);
 
+  // Sync billing address with shipping if the checkbox is checked
   useEffect(() => {
     if (useShippingAsBilling) {
       setFormData((prev) => ({
@@ -48,12 +54,14 @@ const CheckOut: React.FC = () => {
     }
   }, [useShippingAsBilling]);
 
+  // Calculate total amount
   const totalAmount = checkoutItems.reduce(
     (total, item) =>
-      total + (item.discountPrice || item.price) * item.quantity,
+      total + (item.discountPrice || item.price || 0) * (item.quantity || 1),
     0
   );
 
+  // Handle form input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -61,7 +69,7 @@ const CheckOut: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === "paymentMethod") {
-      // Reset payment-specific fields when the method changes
+      // Reset payment-specific fields when payment method changes
       setFormData((prev) => ({
         ...prev,
         payoneerEmail: "",
@@ -71,21 +79,32 @@ const CheckOut: React.FC = () => {
         securityCode: "",
       }));
 
-      // Check if the user selected Payoneer or Credit Card while using shipping address as billing
+      // Error message if specific payment methods are incompatible
       if (value === "Payoneer" || value === "creditCard") {
-        if (useShippingAsBilling) {
-          setErrorMessage(
-            `To pay through ${value}, you need to uncheck "Use Shipping Address as Billing Address."`
-          );
-        } else {
-          setErrorMessage("");
-        }
+        setErrorMessage(
+          useShippingAsBilling
+            ? `Uncheck "Use Shipping Address as Billing Address" for ${value} payment.`
+            : ""
+        );
       }
     }
   };
 
+  // Submit form
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate required fields
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.shippingAddress ||
+      (!useShippingAsBilling && !formData.billingAddress)
+    ) {
+      setErrorMessage("Please fill in all required fields.");
+      return;
+    }
+
     setIsLoading(true);
 
     // Simulate API call
@@ -103,6 +122,7 @@ const CheckOut: React.FC = () => {
         </h1>
 
         <form onSubmit={handleSubmit}>
+          {/* Shipping Information */}
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Shipping Information
           </h2>
@@ -119,6 +139,8 @@ const CheckOut: React.FC = () => {
                 onChange={handleChange}
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your name"
+                required
+                aria-label="Name"
               />
             </div>
 
@@ -134,6 +156,8 @@ const CheckOut: React.FC = () => {
                 onChange={handleChange}
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
+                required
+                aria-label="Email"
               />
             </div>
 
@@ -149,6 +173,8 @@ const CheckOut: React.FC = () => {
                 onChange={handleChange}
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your shipping address"
+                required
+                aria-label="Shipping Address"
               />
             </div>
 
@@ -164,36 +190,8 @@ const CheckOut: React.FC = () => {
                 onChange={handleChange}
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your city"
-              />
-            </div>
-
-            {/* Postal Code */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600">
-                Postal Code
-              </label>
-              <input
-                type="text"
-                name="postalCode"
-                value={formData.postalCode}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your postal code"
-              />
-            </div>
-
-            {/* Country */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600">
-                Country
-              </label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your country"
+                required
+                aria-label="City"
               />
             </div>
           </div>
@@ -223,6 +221,8 @@ const CheckOut: React.FC = () => {
                 onChange={handleChange}
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your billing address"
+                required={!useShippingAsBilling}
+                aria-label="Billing Address"
               />
             </div>
           )}
@@ -255,67 +255,28 @@ const CheckOut: React.FC = () => {
                   onChange={handleChange}
                   className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your Payoneer email"
+                  required
+                  aria-label="Payoneer Email"
                 />
               </div>
             )}
-
-            <label className="block">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="creditCard"
-                checked={formData.paymentMethod === "creditCard"}
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Credit Card
-            </label>
-            {formData.paymentMethod === "creditCard" && (
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Card Number
-                </label>
-                <input
-                  type="text"
-                  name="cardNumber"
-                  value={formData.cardNumber}
-                  onChange={handleChange}
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your card number"
-                />
-              </div>
-            )}
-
-            <label className="block">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="cashOnDelivery"
-                checked={formData.paymentMethod === "cashOnDelivery"}
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Cash on Delivery
-            </label>
           </div>
 
-          {/* Error Message */}
+          {/* Error Messages */}
           {errorMessage && (
             <div className="mt-4 text-red-500 text-sm">{errorMessage}</div>
           )}
 
-          <div className="mt-6 flex justify-between items-center">
-            <span className="font-semibold text-xl text-gray-700">
-              Total: ${totalAmount.toFixed(2)}
-            </span>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg focus:outline-none"
-            >
-              {isLoading ? "Processing..." : "Place Order"}
-            </button>
-          </div>
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`w-full mt-8 p-3 ${
+              isLoading ? "bg-gray-300" : "bg-blue-500"
+            } text-white font-semibold rounded-md focus:outline-none`}
+          >
+            {isLoading ? "Processing..." : `Place Order $${totalAmount.toFixed(2)}`}
+          </button>
         </form>
       </div>
     </main>
