@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useCartContext } from "@/CartContext"; // Ensure this context is implemented and provides `cart`.
+import { useCartContext } from "@/CartContext";
 import { useSearchParams } from "next/navigation";
 
 const CheckOut: React.FC = () => {
-  const { cart = [] } = useCartContext() || {}; // Fallback to avoid crashes if the context isn't available.
+  const { cart = [] } = useCartContext() || {};
   const searchParams = useSearchParams();
 
   const [checkoutItems, setCheckoutItems] = useState(cart);
@@ -69,7 +69,6 @@ const CheckOut: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === "paymentMethod") {
-      // Reset payment-specific fields when payment method changes
       setFormData((prev) => ({
         ...prev,
         payoneerEmail: "",
@@ -79,7 +78,6 @@ const CheckOut: React.FC = () => {
         securityCode: "",
       }));
 
-      // Error message if specific payment methods are incompatible
       if (value === "Payoneer" || value === "creditCard") {
         setErrorMessage(
           useShippingAsBilling
@@ -94,7 +92,6 @@ const CheckOut: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate required fields
     if (
       !formData.name ||
       !formData.email ||
@@ -107,7 +104,6 @@ const CheckOut: React.FC = () => {
 
     setIsLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       alert("Order placed successfully!");
@@ -140,10 +136,8 @@ const CheckOut: React.FC = () => {
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your name"
                 required
-                aria-label="Name"
               />
             </div>
-
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-600">
@@ -157,41 +151,6 @@ const CheckOut: React.FC = () => {
                 className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
                 required
-                aria-label="Email"
-              />
-            </div>
-
-            {/* Shipping Address */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600">
-                Shipping Address
-              </label>
-              <input
-                type="text"
-                name="shippingAddress"
-                value={formData.shippingAddress}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your shipping address"
-                required
-                aria-label="Shipping Address"
-              />
-            </div>
-
-            {/* City */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600">
-                City
-              </label>
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your city"
-                required
-                aria-label="City"
               />
             </div>
           </div>
@@ -208,24 +167,6 @@ const CheckOut: React.FC = () => {
               Use shipping address as billing address
             </label>
           </div>
-
-          {!useShippingAsBilling && (
-            <div>
-              <label className="block text-sm font-medium text-gray-600">
-                Billing Address
-              </label>
-              <input
-                type="text"
-                name="billingAddress"
-                value={formData.billingAddress}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your billing address"
-                required={!useShippingAsBilling}
-                aria-label="Billing Address"
-              />
-            </div>
-          )}
 
           {/* Payment Method */}
           <h2 className="text-xl font-semibold mt-8 mb-4 text-gray-700">
@@ -256,7 +197,6 @@ const CheckOut: React.FC = () => {
                   className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your Payoneer email"
                   required
-                  aria-label="Payoneer Email"
                 />
               </div>
             )}
@@ -273,7 +213,7 @@ const CheckOut: React.FC = () => {
             disabled={isLoading}
             className={`w-full mt-8 p-3 ${
               isLoading ? "bg-gray-300" : "bg-blue-500"
-            } text-white font-semibold rounded-md focus:outline-none`}
+            } text-white font-semibold rounded-md`}
           >
             {isLoading ? "Processing..." : `Place Order $${totalAmount.toFixed(2)}`}
           </button>
