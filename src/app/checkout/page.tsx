@@ -137,7 +137,7 @@ const CheckOut: React.FC = () => {
               />
             </div>
 
-            {/* Address */}
+            {/* Shipping Address */}
             <div>
               <label className="block text-sm font-medium text-gray-600">
                 Shipping Address
@@ -203,9 +203,7 @@ const CheckOut: React.FC = () => {
             <input
               type="checkbox"
               checked={useShippingAsBilling}
-              onChange={() =>
-                setUseShippingAsBilling((prev) => !prev)
-              }
+              onChange={() => setUseShippingAsBilling((prev) => !prev)}
               className="form-checkbox h-5 w-5 text-blue-500"
             />
             <label className="text-gray-600">
@@ -285,7 +283,6 @@ const CheckOut: React.FC = () => {
                   className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your card number"
                 />
-                {/* Add fields for CVC, Expiry Date, and Security Code here */}
               </div>
             )}
 
@@ -302,20 +299,23 @@ const CheckOut: React.FC = () => {
             </label>
           </div>
 
+          {/* Error Message */}
           {errorMessage && (
-            <div className="text-red-500 mt-4">{errorMessage}</div>
+            <div className="mt-4 text-red-500 text-sm">{errorMessage}</div>
           )}
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`mt-6 w-full py-3 px-6 ${
-              isLoading ? "bg-gray-300 cursor-not-allowed" : "bg-blue-600"
-            } text-white text-lg font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          >
-            {isLoading ? "Processing..." : `Submit Order - $${totalAmount.toFixed(2)}`}
-          </button>
+          <div className="mt-6 flex justify-between items-center">
+            <span className="font-semibold text-xl text-gray-700">
+              Total: ${totalAmount.toFixed(2)}
+            </span>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg focus:outline-none"
+            >
+              {isLoading ? "Processing..." : "Place Order"}
+            </button>
+          </div>
         </form>
       </div>
     </main>

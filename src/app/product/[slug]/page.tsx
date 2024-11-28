@@ -49,12 +49,13 @@ export default function ProductPage({ params }: ProductPageProps) {
     setShowAlert(true);
     setTimeout(() => setShowAlert(false), 3000);
   };
-
+  
   const handleBuyNow = () => {
     router.push(
-      `/checkout?product=${encodeURIComponent(JSON.stringify(product.name))}`
+      `/checkout?product=${encodeURIComponent(JSON.stringify(product))}`
     );
   };
+  
 
   return (
     <div className="container mt-24 min-h-screen mx-auto px-4 py-8">
