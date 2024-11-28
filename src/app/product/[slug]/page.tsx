@@ -52,7 +52,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   const handleBuyNow = () => {
     router.push(
-      `/checkout?product=${encodeURIComponent(JSON.stringify(product))}`
+      `/checkout?product=${encodeURIComponent(JSON.stringify(product.name))}`
     );
   };
 
