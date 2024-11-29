@@ -4,12 +4,21 @@ import React, { useState, useEffect } from "react";
 import { useCartContext } from "@/CartContext";
 import { useSearchParams } from "next/navigation";
 
+interface FormData {
+  name: string;
+  email: string;
+  shippingAddress: string;
+  billingAddress: string;
+  paymentMethod: string;
+  payoneerEmail: string;
+}
+
 const CheckOut: React.FC = () => {
   const { cart = [] } = useCartContext() || {};
   const searchParams = useSearchParams();
 
   const [checkoutItems, setCheckoutItems] = useState(cart);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     shippingAddress: "",
@@ -85,6 +94,8 @@ const CheckOut: React.FC = () => {
     }, 1500);
   };
 
+  const fields: (keyof FormData)[] = ["name", "email", "shippingAddress"];
+
   return (
     <main className="min-h-screen mt-16 bg-gray-100 py-8 px-4 sm:px-10">
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
@@ -98,7 +109,7 @@ const CheckOut: React.FC = () => {
               Shipping Information
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {["name", "email", "shippingAddress"].map((field) => (
+              {fields.map((field) => (
                 <div key={field}>
                   <label className="block text-sm font-medium text-gray-600 capitalize">
                     {field.replace(/([A-Z])/g, " $1")}
@@ -106,7 +117,7 @@ const CheckOut: React.FC = () => {
                   <input
                     type="text"
                     name={field}
-                    value={formData[field]}
+                    value={formData[field]} // Type-safe access
                     onChange={handleChange}
                     className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder={`Enter your ${field}`}
