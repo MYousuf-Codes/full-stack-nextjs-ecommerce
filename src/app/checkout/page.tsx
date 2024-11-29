@@ -1,10 +1,6 @@
-// src/app/checkout/page.tsx
-
 import React from "react";
-import CheckOut from "./Checkout"
+import CheckOut from "./Checkout";
 
-const CheckoutPage: React.FC = () => {
-  return <CheckOut />;
-};
+const CheckoutPage: React.FC = () => <CheckOut />;
 
 export default CheckoutPage;
