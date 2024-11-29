@@ -57,7 +57,7 @@ const CheckOutContent: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+      <div className="min-h-screen max-w-4xl mt-24 mx-auto bg-white shadow-md rounded-lg p-6">
         <h1 className="text-3xl font-bold mb-6 text-gray-700 text-center">
           Checkout
         </h1>
